@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>List of Walkers</h1>
+    {% if list_of_walkers %}
+        {% for walker in list_of_walkers %}
+            <div class="card mb-3">
+                <div class="card-body">
+                    <p class="lead"> {{ walker.name }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    {% else%}
+        <p>No Walkers in your area Signed up</p>
+    {% endif %}
+{% endblock %}
