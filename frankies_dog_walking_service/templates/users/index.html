@@ -6,7 +6,25 @@
         {% for walker in list_of_walkers %}
             <div class="card mb-3">
                 <div class="card-body">
-                    <p class="lead"> {{ walker.name }}</p>
+                    <h5 class="card-title"> {{ walker.name }}</h5>
+                    {% if ratings %}
+                    <p class="card-text">My rating:</p>
+                    <ul class="list-group list-group-flush">
+                    {% for rating in ratings %}
+                        {% if rating.walker == walker%}  
+                            <li class="list-group-item">
+                                small dogs: {{rating.small_dog_rating}} || 
+                                medium dogs: {{rating.medium_dog_rating}} || 
+                                large dogs: {{rating.large_dog_rating}}
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                    </ul>
+                    {% else%}
+                        <p class="card-text">I don't have a rating yet</p>
+                    {% endif %}
+                    <a class="card-link btn btn-primary" href="{% url  'users:review'%}">Rate</a>
+                    <a class="card-link btn btn-primary" href="{% url  'users:book'%}">Book Appt</a>
                 </div>
             </div>
         {% endfor %}
