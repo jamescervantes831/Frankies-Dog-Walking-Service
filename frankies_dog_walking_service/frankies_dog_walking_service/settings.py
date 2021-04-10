@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'register.apps.RegisterConfig',
     'users.apps.UsersConfig',
     'walkers.apps.WalkersConfig',
     'django.contrib.admin',
@@ -38,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
+    'django.contrib.staticfiles'
 ]
 
 MIDDLEWARE = [
@@ -71,6 +72,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'frankies_dog_walking_service.wsgi.application'
 
+AUTH_USER_MODEL="users.User"
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
