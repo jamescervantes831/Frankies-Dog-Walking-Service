@@ -3,8 +3,13 @@ from walkers import models as walker_model
 from django.core import validators
 from django.utils import timezone
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from users import validations as v
 import json
+
 # Create your models here.
+
+#I thought I was creating a custom authentication and AuthO 
+# and technically I did just not for the client side lol
 class UserManager(BaseUserManager):
     def create_user(self,email, name, password=None):
         if not email:
@@ -34,8 +39,8 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-class User(AbstractBaseUser):
-    name = models.CharField(max_length=50)
+# Replacing default User class for Djangos admin auth and authO
+class Super_User(AbstractBaseUser):
     email = models.EmailField(
         verbose_name="email address",
         max_length=254,
@@ -43,8 +48,6 @@ class User(AbstractBaseUser):
         unique=True
     )
     password = models.CharField(verbose_name="password", max_length=50)
-    pick_up_point = models.CharField(verbose_name="pick_up_point",max_length=100)
-    date_joined = models.DateTimeField(default=timezone.now)
 
     is_admin=models.BooleanField(default=False)
     is_active=models.BooleanField(default=True)
@@ -63,6 +66,25 @@ class User(AbstractBaseUser):
     def has_module_perms(self, app_label):
         return True
 
+#Users model:
+#   email, password, name, pick_up_address, date_joined
+class User(models.Model):
+    email = models.EmailField(
+        verbose_name="email address",
+        max_length=254,
+        validators=[validators.EmailValidator()],
+        unique=True
+    )
+    password= models.CharField(
+        verbose_name="password",
+        max_length=15,
+        validators=[v.validate_password]
+    )
+    name= models.CharField(verbose_name="name", max_length=256)
+
+    def __str__(self):
+        return self.name
+
 class User_Appointment(models.Model):
     walker = models.ForeignKey(
         walker_model.Walker, 
@@ -72,6 +94,8 @@ class User_Appointment(models.Model):
         default=timezone.now, 
         auto_now = False, auto_now_add= False
         )
+    # True for pick_up_status, False  for drop_off_status
+    pick_up = models.BooleanField(default=False)
     slots = models.IntegerField(
         default=0, 
         validators=[validators.MaxValueValidator(5, "I can only take 5 dogs at a time")]

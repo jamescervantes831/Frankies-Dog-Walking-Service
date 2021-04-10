@@ -72,7 +72,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'frankies_dog_walking_service.wsgi.application'
 
-AUTH_USER_MODEL="users.User"
+AUTH_USER_MODEL="users.Super_User"
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
