@@ -8,9 +8,20 @@ from walkers import models as walker_model
 # index view
 def index(request):
     list_of_walkers = walker_model.Walker.objects.all()
-    context = { 'list_of_walkers': list_of_walkers }
+    ratings = walker_model.Review.objects.all()
+    slots = walker_model.Walker_Appointment.objects.all()
+    context = { 'list_of_walkers': list_of_walkers,
+                'ratings': ratings,
+                'slots': slots
+            }
     return render(request, 'users/index.html', context)
 
 # login view 
 def login(request):
-    return render(request, 'login/login.html')
+    return render(request, 'forms/login.html')
+
+def review(request):
+    return render(request, 'forms/review.html')
+
+def book(request):
+    return render(request, 'forms/book.html')
