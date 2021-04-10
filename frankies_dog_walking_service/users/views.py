@@ -15,13 +15,3 @@ def index(request):
                 'slots': slots
             }
     return render(request, 'users/index.html', context)
-
-# login view 
-def login(request):
-    return render(request, 'forms/login.html')
-
-def review(request):
-    return render(request, 'forms/review.html')
-
-def book(request):
-    return render(request, 'forms/book.html')
